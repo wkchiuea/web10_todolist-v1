@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wkchiuea/web_todolist-v1#readme",
   "dependencies": {
+    "ejs": "^3.1.8",
     "express": "^4.18.1"
   }
 }
