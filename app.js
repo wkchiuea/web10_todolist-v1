@@ -13,7 +13,8 @@ var workItems = [];
 
 app.get("/", function(req, res) {
 
-    let day = date();
+    // let day = date();
+    let day = date.getDate(); // module.exports = object
 
     // assume views directory exist and containing list.ejs
     // use render instead of sendFile
