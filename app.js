@@ -1,6 +1,8 @@
 
 
 const express = require("express");
+const date = require(__dirname + "/date.js");
+
 const app = express();
 app.set("view engine", ejs); // set view engine to use ejs
 app.use(express.urlencoded({extended: true}));
@@ -11,15 +13,7 @@ var workItems = [];
 
 app.get("/", function(req, res) {
 
-    var today = new Date();
-
-    var options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-    };
-
-    var day = today.toLocaleDateString("en-US", options);
+    let day = date();
 
     // assume views directory exist and containing list.ejs
     // use render instead of sendFile
