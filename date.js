@@ -1,8 +1,6 @@
 
 
-module.exports.getDate = getDate;
-
-function getDate() {
+exports.getDate = function() {
 
     var today = new Date();
 
