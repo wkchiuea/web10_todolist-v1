@@ -7,6 +7,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 var items = [];
+var workItems = [];
 
 app.get("/", function(req, res) {
 
@@ -23,17 +24,30 @@ app.get("/", function(req, res) {
     // assume views directory exist and containing list.ejs
     // use render instead of sendFile
     res.render("list", {
-        kindOfDay: day,
+        listTitle: day,
         newListItems: items,
     });
 
 });
 
-app.post("/", function(req, res) {
-    var item = req.body.newItem;
-    items.push(item);
+app.get("/work", (req, res) => {
+    res.render("list", {
+        "listTitle": "Work List",
+        "newListItems": workItems
+    });
+});
 
-    res.redirect("/");
+app.post("/", function(req, res) {
+
+    var item = req.body.newItem;
+
+    if (req.body.list === "Work") {
+        workItems.push(item);
+        res.redirect("/work");
+    } else {
+        items.push(item);
+        res.redirect("/");
+    }
 
 });
 
