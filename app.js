@@ -2,45 +2,37 @@
 
 const express = require("express");
 const app = express();
-app.use("view engine", ejs); // set view engine to use ejs
+app.set("view engine", ejs); // set view engine to use ejs
+app.use(express.urlencoded({extended: true}));
+
+var items = [];
 
 app.get("/", function(req, res) {
 
     var today = new Date();
-    var currentDay = today.getDay();
-    var day = "";
 
-    switch (currentDay) {
-        case 0:
-            day = "Sunday";
-            break;
-        case 1:
-            day = "Monday";
-            break;
-        case 2:
-            day = "Tueday";
-            break;
-        case 3:
-            day = "Wednesday";
-            break;
-        case 4:
-            day = "Thursday";
-            break;
-        case 5:
-            day = "Friday";
-            break;
-        case 6:
-            day = "Saturday";
-            break;
-        default:
-            break;
-    }
+    var options = {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+    };
+
+    var day = today.toLocaleDateString("en-US", options);
 
     // assume views directory exist and containing list.ejs
     // use render instead of sendFile
     res.render("list", {
-        kindOfDay: day
+        kindOfDay: day,
+        newListItems: items,
     });
+
+});
+
+app.post("/", function(req, res) {
+    var item = req.body.newItem;
+    items.push(item);
+
+    res.redirect("/");
 
 });
 
